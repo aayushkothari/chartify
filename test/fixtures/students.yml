@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  fa1: 1.5
+  fa2: 1.5
+  sa1: 1.5
+  section: 
+
+two:
+  name: MyString
+  fa1: 1.5
+  fa2: 1.5
+  sa1: 1.5
+  section: 
