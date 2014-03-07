@@ -12,20 +12,11 @@ text {
   font: 12px sans-serif;
 }
 
-
  svg {
   height: 450px;
   min-width: 100px;
   min-height: 100px;
-
-/*
-  margin: 50px;
-  Minimum height and width is a good idea to prevent negative SVG dimensions...
-  For example width should be =< margin.left + margin.right + 1,
-  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
-*/
 }
-
 </style>
 <body>
   <%= content_tag "div", id: "student", data: {name: @student.name } do %>
@@ -47,11 +38,8 @@ text {
 <script src="/assets/src/models/scatter.js"></script>
 <script src="/assets/src/models/line.js"></script>
 <script src="/assets/src/models/cumulativeLineChart.js"></script>
+
 <script>
-
-
-// Wrapping in nv.addGraph allows for '0 timeout render', stores rendered charts in nv.graphs, and may do more in the future... it's NOT required
-
 nv.addGraph(function() {
   var chart = nv.models.lineChart()
         .useInteractiveGuideline(true)
@@ -109,6 +97,5 @@ function data() {
   ];
   
 }
-
 
 </script>
