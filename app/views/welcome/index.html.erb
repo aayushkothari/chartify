@@ -1,5 +1,30 @@
-<h1>Welcome!</h1>
+<center><h1>Welcome to Chartif<em style="color: gold">y</em>!</h1>
+<br /><br /><h4>Kindly click on a student to see how he/she performed in the tests</h4></center>
+<hr/>
+<table> 
+	<tr>
+	<% for sec in Section.all %>
+		
+		<th><h2>Section <%= sec.name %></h2></th>
 
-<% for st in Student.all %>
- <%= link_to "#{st.name}", {:controller => "welcome", :action => "result", :student => st.name }%>
-<% end %>
+		<table class="table table-striped">
+			<tr>
+				<th>Student Name</th>
+				<% for ass in Assessment.all.collect{|a| a.name}.uniq %>
+					<th><%= ass %>(%)</th>
+				<% end %>
+			</tr>
+			<% for st in sec.students.reverse %>
+				 <tr>
+				 <td><%= link_to "#{st.name}", {:controller => "welcome", :action => "result", :student => st.name }%></td>
+				 <td><%= (st.assessments[0].score*100).round(2) %></td>
+				 <td><%= (st.assessments[1].score*100).round(2) %></td>
+				 <td><%= (st.assessments[2].score*100).round(2) %></td>
+				</tr>
+
+			<% end %>
+		</table>
+		
+	<% end %>
+	</tr>
+</table>

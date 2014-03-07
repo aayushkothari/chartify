@@ -29,7 +29,7 @@ text {
 </style>
 <body>
   <%= content_tag "div", id: "student", data: {name: @student.name } do %>
-    <h1>Showing how <%= @student.name %> fares compared to each section and all sections combined </h1>
+    <h2>Comparing <span style="color: #ABCDEF"><%= @student.name %></span>'s performance with others</h2></span>
   <% end %>
   <div id="chart" class='chart with-transitions'>
     <svg></svg>
