@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link href="/assets/src/nv.d3.css" rel="stylesheet" type="text/css">
+
+<style>
+body {
+  overflow-y:scroll;
+}
+
+text {
+  font: 12px sans-serif;
+}
+
+
+ svg {
+  height: 450px;
+  min-width: 100px;
+  min-height: 100px;
+
+/*
+  margin: 50px;
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
+}
+
+</style>
+<body>
+  <%= content_tag "div", id: "student", data: {name: @student.name } do %>
+    <h1>Showing how <%= @student.name %> fares compared to each section and all sections combined </h1>
+  <% end %>
+  <div id="chart" class='chart with-transitions'>
+    <svg></svg>
+  </div>
+ <br /><br />
+ <hr>
+ 
+<script src="/assets/d3.v3.js"></script>
+<script src="/assets/nv.d3.js"></script>
+<script src="/assets/src/tooltip.js"></script>
+<script src="/assets/src/utils.js"></script>
+<script src="/assets/src/interactiveLayer.js"></script>
+<script src="/assets/src/models/legend.js"></script>
+<script src="/assets/src/models/axis.js"></script>
+<script src="/assets/src/models/scatter.js"></script>
+<script src="/assets/src/models/line.js"></script>
+<script src="/assets/src/models/cumulativeLineChart.js"></script>
+<script>
+
+
+// Wrapping in nv.addGraph allows for '0 timeout render', stores rendered charts in nv.graphs, and may do more in the future... it's NOT required
+
+nv.addGraph(function() {
+  var chart = nv.models.lineChart()
+        .useInteractiveGuideline(true)
+        .margin({top: 100})
+  ;
+var x_format = function(num) {
+    if (num === -1)
+        return "FA1";
+    else if (num === 0)
+        return "FA2";
+    else if (num === 1)
+        return "SA1";
+};
+	chart.xAxis
+      .axisLabel('Test')
+  .tickFormat(x_format);
+  
+  chart.yAxis
+      .axisLabel('Score')
+      .tickFormat(d3.format('%'));
+
+  d3.select('#chart svg')
+      .datum(data)
+    .transition().duration(500)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+
+function data() {
+ return [
+    {
+      values: gon.results[0],
+      key: '9A',
+      color: '#ff7f0e'
+    },
+    {
+      values: gon.results[1],
+      key: '9B',
+      color: '#2ca02c'
+    },
+    {
+      values: gon.results[2],
+      key: '9(A+B)',
+      color: '#4d4d4d'
+    },
+    {
+      values: gon.results[3],
+      key: $('#student').data('name'),
+      color: '#ABCDEF'
+    }
+  ];
+  
+}
+
+
+</script>
